@@ -30,7 +30,7 @@ public class IsaacNewton
         String response = "";
         if (statement.length() == 0)
         {
-            response = "An object won't change it's course unless a force acts upon it.";
+            response = "I can't reply unless you say something first (First Law).";
         }
 
         else if (findKeyword(statement, "no") >= 0)
@@ -46,9 +46,9 @@ public class IsaacNewton
         }
 
         
-        else if (findKeyword(statement, "hello") >= 0)
-                (findKeyword(statement, "hi") >= 0);
-                (findKeyword(statement, "hey") >= 0);
+        else if (findKeyword(statement, "hello") >= 0 ||
+        findKeyword(statement, "hi") >= 0 ||
+        findKeyword(statement, "hey") >= 0)
         {
             response = "What is your name?";
         }
@@ -70,10 +70,17 @@ public class IsaacNewton
             response = "Ouchhhh.";
         }
         
-        
-        
-        
-        // Responses which require transformations
+        else if (findKeyword(statement, "famous") >= 0)
+        {
+            response = getFamousResponse();
+        }
+            
+        else if (findKeyword(statement, "My name is") >= 0)
+        {
+            response = transformMyNameIs(statement);
+        }    
+            
+            // Responses which require transformations
         else if (findKeyword(statement, "I want to", 0) >= 0)
         {
             response = transformIWantToStatement(statement);
@@ -129,19 +136,9 @@ public class IsaacNewton
                     .length() - 1);
         }
         int psn = findKeyword (statement, "My name is", 0);
-        String restOfStatement = statement.substring(psn + 10).trim();
-        return "Nice to meet you" + restOfStatement + "?";
+        String restOfStatement = statement.substring(psn + 11).trim();
+        return "Nice to meet you " + restOfStatement + ".";
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     
     
     /**
@@ -317,4 +314,17 @@ public class IsaacNewton
             "You don't say."
     };
     
+
+    private String getFamousResponse ()
+{
+        Random f = new Random ();
+        return famousResponses [f.nextInt(famousResponses.length)];
 }
+    
+    private String [] famousResponses = {"I am largely known as a renowned physicist!",
+            "I discovered three laws of motion.",
+            "You can thank me for the creation of calculus.",
+            "I basically discovered gravity lol."
+    };
+}
+    
