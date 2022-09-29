@@ -17,12 +17,12 @@ public class IsaacNewton
     {
         return "Pleased to meet you, I'm Isaac Newton!";
     }
-    
+
     /**
      * Gives a response to a user statement
      * 
      * @param statement
-     *            the user statement
+     * the user statement
      * @return a response based on the rules given
      */
     public String getResponse(String statement)
@@ -38,49 +38,59 @@ public class IsaacNewton
             response = "Oh. Why so?";
         }
         else if (findKeyword(statement, "mother") >= 0
-                || findKeyword(statement, "father") >= 0
-                || findKeyword(statement, "sister") >= 0
-                || findKeyword(statement, "brother") >= 0)
+        || findKeyword(statement, "father") >= 0
+        || findKeyword(statement, "sister") >= 0
+        || findKeyword(statement, "brother") >= 0)
         {
             response = "Interesting family you got there, tell me more.";
         }
 
-        
         else if (findKeyword(statement, "hello") >= 0 ||
         findKeyword(statement, "hi") >= 0 ||
         findKeyword(statement, "hey") >= 0)
         {
             response = "What is your name?";
         }
-          
+
         else if (findKeyword(statement, "law") >= 0)
-    {
+        {
             response = "Did you know I personally discovered three basic laws of motion!";
         }
-        
+
+        else if (findKeyword(statement, "married") >= 0 ||
+        findKeyword(statement, "kids") >=0 ||
+        findKeyword(statement, "children")>= 0)
+        {
+            response = "Nope, never married or had kids.";
+        }
+
+        else if (findKeyword(statement, "born") >= 0 ||
+        findKeyword(statement,"live") >=0)
+    {
+            response = "I was born in the Woolsthorpe Manor House in the United Kingdom.";
+        }
         
         else if (findKeyword(statement, "gravity") >= 0)
         {
             response = "That darn apple..";
         }
-        
-        
+
         else if (findKeyword(statement, "apple") >= 0)
         {
             response = "Ouchhhh.";
         }
-        
+
         else if (findKeyword(statement, "famous") >= 0)
         {
             response = getFamousResponse();
         }
-            
+
         else if (findKeyword(statement, "My name is") >= 0)
         {
             response = transformMyNameIs(statement);
         }    
-            
-            // Responses which require transformations
+
+        // Responses which require transformations
         else if (findKeyword(statement, "I want to", 0) >= 0)
         {
             response = transformIWantToStatement(statement);
@@ -99,7 +109,7 @@ public class IsaacNewton
             int psn = findKeyword(statement, "you", 0);
 
             if (psn >= 0
-                    && findKeyword(statement, "me", psn) >= 0)
+            && findKeyword(statement, "me", psn) >= 0)
             {
                 response = transformYouMeStatement(statement);
             }
@@ -111,7 +121,7 @@ public class IsaacNewton
                 psn = findKeyword(statement, "i", 0);
 
                 if (psn >= 0
-                        && findKeyword(statement, "you", psn) >= 0)
+                && findKeyword(statement, "you", psn) >= 0)
                 {
                     response = transformIYouStatement(statement);
                 }
@@ -123,7 +133,7 @@ public class IsaacNewton
         }
         return response;
     }
-    
+
     private String transformMyNameIs(String statement)
     {
         //  Remove the final period, if there is one
@@ -133,14 +143,13 @@ public class IsaacNewton
         if (lastChar.equals("."))
         {
             statement = statement.substring(0, statement
-                    .length() - 1);
+                .length() - 1);
         }
         int psn = findKeyword (statement, "My name is", 0);
         String restOfStatement = statement.substring(psn + 11).trim();
         return "Nice to meet you " + restOfStatement + ".";
     }
-    
-    
+
     /**
      * Take a statement with "I want to <something>." and transform it into 
      * "What would it mean to <something>?"
@@ -156,14 +165,13 @@ public class IsaacNewton
         if (lastChar.equals("."))
         {
             statement = statement.substring(0, statement
-                    .length() - 1);
+                .length() - 1);
         }
         int psn = findKeyword (statement, "I want to", 0);
         String restOfStatement = statement.substring(psn + 9).trim();
         return "What would it mean to " + restOfStatement + "?";
     }
 
-    
     /**
      * Take a statement with "I want <something>." and transform it into 
      * "Would you really be happy if you had <something>?"
@@ -179,13 +187,13 @@ public class IsaacNewton
         if (lastChar.equals("."))
         {
             statement = statement.substring(0, statement
-                    .length() - 1);
+                .length() - 1);
         }
         int psn = findKeyword (statement, "I want", 0);
         String restOfStatement = statement.substring(psn + 6).trim();
         return "Would you really be happy if you had " + restOfStatement + "?";
     }
-    
+
     /**
      * Take a statement with "you <something> me" and transform it into 
      * "What makes you think that I <something> you?"
@@ -201,16 +209,16 @@ public class IsaacNewton
         if (lastChar.equals("."))
         {
             statement = statement.substring(0, statement
-                    .length() - 1);
+                .length() - 1);
         }
-        
+
         int psnOfYou = findKeyword (statement, "you", 0);
         int psnOfMe = findKeyword (statement, "me", psnOfYou + 3);
-        
+
         String restOfStatement = statement.substring(psnOfYou + 3, psnOfMe).trim();
         return "What makes you think that I " + restOfStatement + " you?";
     }
-    
+
     /**
      * Take a statement with "I <something> you" and transform it into 
      * "Why do you <something> me?"
@@ -226,18 +234,16 @@ public class IsaacNewton
         if (lastChar.equals("."))
         {
             statement = statement.substring(0, statement
-                    .length() - 1);
+                .length() - 1);
         }
-        
+
         int psnOfI = findKeyword (statement, "I", 0);
         int psnOfYou = findKeyword (statement, "you", psnOfI);
-        
+
         String restOfStatement = statement.substring(psnOfI + 1, psnOfYou).trim();
         return "Why do you " + restOfStatement + " me?";
     }
-    
 
-    
     
     /**
      * Search for one word in phrase.  The search is not case sensitive.
@@ -253,7 +259,7 @@ public class IsaacNewton
         String phrase = statement.trim();
         //  The only change to incorporate the startPos is in the line below
         int psn = phrase.toLowerCase().indexOf(goal.toLowerCase(), startPos);
-        
+
         //  Refinement--make sure the goal isn't part of a word 
         while (psn >= 0) 
         {
@@ -267,22 +273,22 @@ public class IsaacNewton
             {
                 after = phrase.substring(psn + goal.length(), psn + goal.length() + 1).toLowerCase();
             }
-            
+
             //  If before and after aren't letters, we've found the word
             if (((before.compareTo ("a") < 0 ) || (before.compareTo("z") > 0))  //  before is not a letter
-                    && ((after.compareTo ("a") < 0 ) || (after.compareTo("z") > 0)))
+            && ((after.compareTo ("a") < 0 ) || (after.compareTo("z") > 0)))
             {
                 return psn;
             }
-            
+
             //  The last position didn't work, so let's find the next, if there is one.
             psn = phrase.indexOf(goal.toLowerCase(), psn + 1);
-            
+
         }
-        
+
         return -1;
     }
-    
+
     /**
      * Search for one word in phrase.  The search is not case sensitive.
      * This method will check that the given goal is not a substring of a longer string
@@ -295,7 +301,6 @@ public class IsaacNewton
     {
         return findKeyword (statement, goal, 0);
     }
-    
 
 
     /**
@@ -307,24 +312,23 @@ public class IsaacNewton
         Random r = new Random ();
         return randomResponses [r.nextInt(randomResponses.length)];
     }
-    
-    private String [] randomResponses = {"Interesting, tell me more",
+
+    private String [] randomResponses = {"That's interesting..",
             "Hmmm.",
             "Do you really think so?",
             "You don't say."
-    };
-    
+        };
 
     private String getFamousResponse ()
-{
+    {
         Random f = new Random ();
         return famousResponses [f.nextInt(famousResponses.length)];
-}
-    
+    }
+
     private String [] famousResponses = {"I am largely known as a renowned physicist!",
             "I discovered three laws of motion.",
             "You can thank me for the creation of calculus.",
-            "I basically discovered gravity lol."
-    };
+            "I essentially discovered gravity."
+        };
 }
-    
+ 
